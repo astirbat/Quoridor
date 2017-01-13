@@ -25,8 +25,21 @@ void ::Game::GamePage::InitializeComponent()
 
 void ::Game::GamePage::Connect(int __connectionId, ::Platform::Object^ __target)
 {
-    __connectionId;         // unreferenced 
-    __target;               // unreferenced
+    switch (__connectionId)
+    {
+        case 1:
+            {
+                ::Windows::UI::Xaml::Controls::Grid^ element1 = safe_cast<::Windows::UI::Xaml::Controls::Grid^>(__target);
+                (safe_cast<::Windows::UI::Xaml::Controls::Grid^>(element1))->Loaded += ref new ::Windows::UI::Xaml::RoutedEventHandler(this, (void (::Game::GamePage::*)
+                    (::Platform::Object^, ::Windows::UI::Xaml::RoutedEventArgs^))&GamePage::Grid_Loaded);
+            }
+            break;
+        case 2:
+            {
+                this->board = safe_cast<::Windows::UI::Xaml::Controls::Grid^>(__target);
+            }
+            break;
+    }
     _contentLoaded = true;
 }
 

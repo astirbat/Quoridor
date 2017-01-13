@@ -139,6 +139,7 @@
     <ClInclude Include="GamePage.xaml.h">
       <DependentUpon>GamePage.xaml</DependentUpon>
     </ClInclude>
+    <ClInclude Include="IJtag.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.xaml.h">
       <DependentUpon>App.xaml</DependentUpon>
@@ -180,6 +181,7 @@
     <ClCompile Include="GamePage.xaml.cpp">
       <DependentUpon>GamePage.xaml</DependentUpon>
     </ClCompile>
+    <ClCompile Include="IJtag.cpp" />
     <ClCompile Include="MainPage.xaml.cpp">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </ClCompile>
