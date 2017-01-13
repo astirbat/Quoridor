@@ -37,6 +37,7 @@ SolidColorBrush^ blue;
 SolidColorBrush^ red;
 SolidColorBrush^ green;
 SolidColorBrush^ yellow;
+SolidColorBrush^ select;
 GameInstance^ gameInstance;
 
 void Game::GamePage::OnNavigatedTo(NavigationEventArgs^ e)
@@ -59,13 +60,17 @@ void Game::GamePage::Grid_Loaded(Platform::Object^ sender, Windows::UI::Xaml::Ro
 	 red = ref new SolidColorBrush(ColorHelper::FromArgb(255, 255, 0, 0));
 	 green = ref new SolidColorBrush(ColorHelper::FromArgb(255, 0, 255, 0));
 	 yellow = ref new SolidColorBrush(ColorHelper::FromArgb(255, 255, 255, 0));
-	
+	 select = ref new SolidColorBrush(ColorHelper::FromArgb(255, 0, 255, 255));
+
 	 gameInstance = ref new GameInstance(nrOfPlayers);
 	 Init();
 }
 
 void Game::GamePage::Init() {
 	gameInstance->NewGame();
+
+	_wI = -1;
+	_wJ = -1;
 
 	player1Score->Text = "" + gameInstance->GetPlayerScore(0);
 	player2Score->Text = "" + gameInstance->GetPlayerScore(1);
@@ -165,6 +170,9 @@ void Game::GamePage::Init() {
 }
 
 void Game::GamePage::ChangePlayer(int oldPlayer) {
+	_wI = -1;
+	_wJ = -1;
+
 	if (oldPlayer == 0)
 		player1->FontSize = 16;
 	if (oldPlayer == 1)
@@ -185,6 +193,9 @@ void Game::GamePage::ChangePlayer(int oldPlayer) {
 }
 
 void Game::GamePage::MovePlayer(Grid ^grid, int oldPlayer) {
+	if (_wI != -1 && _wJ != -1)
+		_w->Background = gray;
+
 	if (oldPlayer == 0)
 		player1Grid->Background = white;
 	if(oldPlayer==1)
@@ -216,11 +227,24 @@ void Game::GamePage::ClickBorder(Grid ^grid, int i, int j) {
 
 	int _oldPlayer = gameInstance->GetCurrentPlayer();
 
-	if (gameInstance->AddWall(i, j)) {
-		grid->Background = black;
 
+	if ((_wI != -1 && _wJ != -1) && (gameInstance->AddWall(i, j, _wI, _wJ))) {
+		grid->Background = black;
+		_w->Background = black;
 		ChangePlayer(_oldPlayer);
+
 	}
+	else
+	{
+		if (_wI != -1 && _wJ != -1)
+			_w->Background = gray;
+
+		_w = grid;
+		_w->Background = select;
+		_wI = i;
+		_wJ = j;
+	}
+
 }
 
 void Game::GamePage::ClickContent(Grid ^grid,int i, int j) {

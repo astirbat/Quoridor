@@ -19,7 +19,8 @@ public:
 	int GetCurrentPlayer();
 	bool Move(int i, int j);
 	bool MoveInternal(int i, int j);
-	bool AddWall(int i, int j);
+	bool AddWall(int i, int j,int i2,int j2);
+	bool AddWallInternal(int i, int j, int i2, int j2);
 	void NextPlayer();
 	int GetWinner();
 	bool Win();

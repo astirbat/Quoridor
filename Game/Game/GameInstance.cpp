@@ -137,21 +137,44 @@ bool GameInstance::MoveInternal(int i, int j)
 	return false;
 }
 
-bool GameInstance::AddWall(int i, int j)
+bool GameInstance::AddWall(int i, int j, int i2, int j2)
+{
+	bool rez = AddWallInternal(i, j, i2, j2);
+	if (rez) {
+		_walls[_currentPlayerTurn]--;
+		_board[i][j] = _WALL;
+		_board[i2][j2] = _WALL;
+		NextPlayer();
+	}
+	return rez;
+}
+bool GameInstance::AddWallInternal(int i, int j, int i2, int j2)
 {
 	if (_winner != -1)
 		return false;
-
 	if ((i + j) % 2 != 1)
 		return false;
-	if (_board[i][j] == _WALL)
+	if ((i2 + j2) % 2 != 1)
 		return false;
 	if (_walls[_currentPlayerTurn] == 0)
 		return false;
-	_walls[_currentPlayerTurn]--;
-	_board[i][j] = _WALL;
-	NextPlayer();
-	return true;
+
+	if (_board[i][j] != _WALL && _board[i2][j2] != _WALL) {
+
+		if (i != i2 && j != j2)
+			return false;
+
+		if (((i + i2) / 2) % 2 == 1 && ((j + j2) / 2) % 2 == 1)
+			return false;
+
+		if (i != i2 && (i + 2 == i2 || i - 2 == i2))
+			return true;
+
+		if (j != j2 && (j + 2 == j2 || j - 2 == j2))
+			return true;
+	}
+
+	return false;
 }
 
 void GameInstance::NextPlayer()

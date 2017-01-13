@@ -21,6 +21,9 @@ namespace Game
 		GamePage();
 		void OnNavigatedTo(NavigationEventArgs ^ e) override;
 	private:
+		int _wI;
+		int _wJ;
+		Grid ^_w;
 		int nrOfPlayers;
 		Grid ^player1Grid;
 		Grid ^player2Grid;
