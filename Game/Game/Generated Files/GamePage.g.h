@@ -12,6 +12,7 @@ namespace Windows {
         namespace Xaml {
             namespace Controls {
                 ref class Grid;
+                ref class TextBlock;
             }
         }
     }
@@ -33,6 +34,10 @@ namespace Game
         bool _contentLoaded;
     
         private: ::Windows::UI::Xaml::Controls::Grid^ board;
+        private: ::Windows::UI::Xaml::Controls::TextBlock^ player1;
+        private: ::Windows::UI::Xaml::Controls::TextBlock^ player1Score;
+        private: ::Windows::UI::Xaml::Controls::TextBlock^ player2;
+        private: ::Windows::UI::Xaml::Controls::TextBlock^ player2Score;
     };
 }
 

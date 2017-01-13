@@ -8,6 +8,32 @@
     mc:Ignorable="d">
 
     <Grid x:ConnectionId='1'                       >
+        <Grid VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <TextBlock x:ConnectionId='3' Grid.Column="1" x:Name="player1" Text="player1" FontSize="16"/>
+            <TextBlock x:ConnectionId='4' Grid.Column="1" Grid.Row="1" x:Name="player1Score"  Text="0" TextAlignment="Center"/>
+
+            <TextBlock x:ConnectionId='5' Grid.Column="7" x:Name="player2" Text="player2" FontSize="16"/>
+            <TextBlock x:ConnectionId='6' Grid.Column="7" Grid.Row="1" x:Name="player2Score" Text="0" TextAlignment="Center"/>
+
+            <Button x:ConnectionId='7' Grid.Column="4" Grid.RowSpan="2" Content="New Game" HorizontalAlignment="Center"                      />
+        </Grid>
+        
         <Grid x:ConnectionId='2' x:Name="board" Margin="50">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="10"/>

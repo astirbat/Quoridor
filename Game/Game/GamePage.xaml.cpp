@@ -6,6 +6,7 @@
 #include "pch.h"
 #include "GamePage.xaml.h"
 #include "IJtag.h"
+#include "GameInstance.h"
 
 using namespace Game;
 
@@ -33,6 +34,7 @@ SolidColorBrush^ white ;
 SolidColorBrush^ black ;
 SolidColorBrush^ blue;
 SolidColorBrush^ red;
+GameInstance^ gameInstance;
 
 void Game::GamePage::Grid_Loaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
@@ -41,12 +43,13 @@ void Game::GamePage::Grid_Loaded(Platform::Object^ sender, Windows::UI::Xaml::Ro
 	 black = ref new SolidColorBrush(ColorHelper::FromArgb(255, 0, 0, 0));
 	 blue = ref new SolidColorBrush(ColorHelper::FromArgb(255, 0, 0, 255));
 	 red = ref new SolidColorBrush(ColorHelper::FromArgb(255, 255, 0, 0));
-
-
+	 
 	 Init();
 }
 
 void Game::GamePage::Init() {
+	gameInstance = ref new GameInstance(2);
+
 	for (int i = 0; i <= 18; i += 2) {
 		for (int j = 0; j <= 18; j++) {
 
@@ -92,23 +95,71 @@ void Game::GamePage::Init() {
 			board->SetRow(grid, i);
 			board->SetColumn(grid, j);
 
-			if(i==1 && j==5)
+			int trueI = (i - 1) / 2;
+			int trueJ = (j - 1) / 2;
+			if (trueI == 4 && trueJ == 0) {
+				player1Grid = grid;
 				grid->Background = blue;
-			if (i == 9 && j == 5)
+			}
+			if (trueI == 4 && trueJ == 8) {
+				player2Grid = grid;
 				grid->Background = red;
+			}
 		}
+	}
+
+	player1->Foreground = blue;
+	player1Score->Foreground = blue;
+	player2->Foreground = red;
+	player2Score->Foreground = red;
+
+	ChangePlayer(-1);
+}
+
+void Game::GamePage::ChangePlayer(int oldPlayer) {
+	if (oldPlayer == 0)
+		player1->FontSize = 16;
+	if (oldPlayer == 1)
+		player2->FontSize = 16;
+	if (gameInstance->GetCurrentPlayer() == 0)
+		player1->FontSize = 20;
+	if (gameInstance->GetCurrentPlayer() == 1)
+		player2->FontSize = 20;
+}
+void Game::GamePage::MovePlayer(Grid ^grid, int oldPlayer) {
+	if (oldPlayer == 0)
+		player1Grid->Background = white;
+	if(oldPlayer==1)
+		player2Grid->Background = white;
+
+	if (oldPlayer == 0) {
+		grid->Background = blue;
+		player1Grid = grid;
+	}
+	if (oldPlayer == 1) {
+		grid->Background = red;
+		player2Grid = grid;
 	}
 }
 
-void ClickBorder(Grid ^grid,int i, int j) {
-	grid->Background = black;
+void Game::GamePage::ClickBorder(Grid ^grid, int i, int j) {
+
+	int _oldPlayer = gameInstance->GetCurrentPlayer();
+
+	if (gameInstance->AddWall(i, j)) {
+		grid->Background = black;
+
+		ChangePlayer(_oldPlayer);
+	}
 }
 
-void ClickContent(Grid ^grid,int i, int j) {
-	int trueI = (i - 1) / 2;
-	int trueJ = (j - 1) / 2;
+void Game::GamePage::ClickContent(Grid ^grid,int i, int j) {
+	int _oldPlayer = gameInstance->GetCurrentPlayer();
 
-	grid->Background = red;
+	if (gameInstance->Move(i, j)) {
+		MovePlayer(grid,_oldPlayer);
+		ChangePlayer(_oldPlayer);
+	}
 }
 
 void Game::GamePage::OnTapped(Platform::Object ^sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs ^e)
@@ -124,3 +175,7 @@ void Game::GamePage::OnTapped(Platform::Object ^sender, Windows::UI::Xaml::Input
 		ClickBorder(grid,i, j);
 }
 
+void Game::GamePage::Button_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	Init();
+}

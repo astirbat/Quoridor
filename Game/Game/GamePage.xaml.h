@@ -6,6 +6,7 @@
 #pragma once
 
 #include "GamePage.g.h"
+using namespace Windows::UI::Xaml::Controls;
 
 namespace Game
 {
@@ -18,8 +19,17 @@ namespace Game
 	public:
 		GamePage();
 	private:
+		Grid ^player1Grid;
+		Grid ^player2Grid;
+		Grid ^player3Grid;
+		Grid ^player4Grid;
 		void Grid_Loaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void OnTapped(Platform::Object ^sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs ^e);
 		void Init();
+		void ChangePlayer(int oldPlayer);
+		void MovePlayer(Grid ^grid,int oldPlayer);
+		void ClickBorder(Grid ^grid, int i, int j);
+		void ClickContent(Grid ^grid, int i, int j);
+		void Button_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 	};
 }

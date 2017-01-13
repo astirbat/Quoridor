@@ -39,6 +39,33 @@ void ::Game::GamePage::Connect(int __connectionId, ::Platform::Object^ __target)
                 this->board = safe_cast<::Windows::UI::Xaml::Controls::Grid^>(__target);
             }
             break;
+        case 3:
+            {
+                this->player1 = safe_cast<::Windows::UI::Xaml::Controls::TextBlock^>(__target);
+            }
+            break;
+        case 4:
+            {
+                this->player1Score = safe_cast<::Windows::UI::Xaml::Controls::TextBlock^>(__target);
+            }
+            break;
+        case 5:
+            {
+                this->player2 = safe_cast<::Windows::UI::Xaml::Controls::TextBlock^>(__target);
+            }
+            break;
+        case 6:
+            {
+                this->player2Score = safe_cast<::Windows::UI::Xaml::Controls::TextBlock^>(__target);
+            }
+            break;
+        case 7:
+            {
+                ::Windows::UI::Xaml::Controls::Button^ element7 = safe_cast<::Windows::UI::Xaml::Controls::Button^>(__target);
+                (safe_cast<::Windows::UI::Xaml::Controls::Button^>(element7))->Click += ref new ::Windows::UI::Xaml::RoutedEventHandler(this, (void (::Game::GamePage::*)
+                    (::Platform::Object^, ::Windows::UI::Xaml::RoutedEventArgs^))&GamePage::Button_Click);
+            }
+            break;
     }
     _contentLoaded = true;
 }
