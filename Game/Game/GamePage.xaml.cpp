@@ -43,12 +43,16 @@ void Game::GamePage::Grid_Loaded(Platform::Object^ sender, Windows::UI::Xaml::Ro
 	 black = ref new SolidColorBrush(ColorHelper::FromArgb(255, 0, 0, 0));
 	 blue = ref new SolidColorBrush(ColorHelper::FromArgb(255, 0, 0, 255));
 	 red = ref new SolidColorBrush(ColorHelper::FromArgb(255, 255, 0, 0));
-	 
+
+	 gameInstance = ref new GameInstance(2);
 	 Init();
 }
 
 void Game::GamePage::Init() {
-	gameInstance = ref new GameInstance(2);
+	gameInstance->NewGame();
+
+	player1Score->Text = "" + gameInstance->GetPlayerScore(0);
+	player2Score->Text = "" + gameInstance->GetPlayerScore(1);
 
 	for (int i = 0; i <= 18; i += 2) {
 		for (int j = 0; j <= 18; j++) {
@@ -126,6 +130,7 @@ void Game::GamePage::ChangePlayer(int oldPlayer) {
 	if (gameInstance->GetCurrentPlayer() == 1)
 		player2->FontSize = 20;
 }
+
 void Game::GamePage::MovePlayer(Grid ^grid, int oldPlayer) {
 	if (oldPlayer == 0)
 		player1Grid->Background = white;
@@ -173,6 +178,9 @@ void Game::GamePage::OnTapped(Platform::Object ^sender, Windows::UI::Xaml::Input
 		ClickContent(grid,i, j);
 	else
 		ClickBorder(grid,i, j);
+
+	if (gameInstance->Win())
+		Init();
 }
 
 void Game::GamePage::Button_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)

@@ -5,9 +5,15 @@
 GameInstance::GameInstance(int players)
 {
 	_players = players;
-	_currentPlayerTurn = 0;
 	for (int i = 0; i < 4; i++) {
 		_score[i] = 0;
+	}
+}
+
+void GameInstance::NewGame()
+{
+	_currentPlayerTurn = 0;
+	for (int i = 0; i < 4; i++) {
 		_playerI[i] = 0;
 		_playerJ[i] = 0;
 	}
@@ -31,13 +37,13 @@ GameInstance::GameInstance(int players)
 		_playerI[2] = 1;
 		_playerJ[2] = 9;
 		_board[0][9] = 3;
-	}	
+	}
 	if (_players > 3) {
 		_playerI[3] = 17;
 		_playerJ[3] = 9;
 		_board[17][9] = 4;
 	}
-
+	_winner = -1;
 }
 
 
@@ -57,6 +63,9 @@ int GameInstance::GetCurrentPlayer()
 
 bool GameInstance::Move(int i, int j)
 {
+	if (_winner != -1)
+		return false;
+
 	bool rez = MoveInternal(i, j);
 	if (rez) {
 		_board[_playerI[_currentPlayerTurn]][_playerJ[_currentPlayerTurn]] = 0;
@@ -73,8 +82,6 @@ bool GameInstance::MoveInternal(int i, int j)
 {
 	if (i % 2 != 1 || j % 2 != 1)
 		return false;
-	if (_board[i][j] != 0)
-		return false;
 
 	if (_playerI[_currentPlayerTurn] == i) {
 		if ((_playerJ[_currentPlayerTurn] + 2 == j) && (_board[i][j - 1] != _WALL))
@@ -89,11 +96,17 @@ bool GameInstance::MoveInternal(int i, int j)
 			return true;
 	}
 
+
+	if (_board[i][j] != 0)
+		return false;
 	return false;
 }
 
 bool GameInstance::AddWall(int i, int j)
 {
+	if (_winner != -1)
+		return false;
+
 	if ((i + j) % 2 != 1)
 		return false;
 	if (_board[i][j] == _WALL)
@@ -108,7 +121,38 @@ bool GameInstance::AddWall(int i, int j)
 
 void GameInstance::NextPlayer()
 {
+	Win();
+
 	_currentPlayerTurn++;
 	if (_currentPlayerTurn == _players)
 		_currentPlayerTurn = 0;
+}
+
+bool GameInstance::Win()
+{
+	if (_playerJ[0] == 17) {
+		_winner = 0;
+		_score[0]++;
+		return true;
+	}
+	if (_playerJ[1] == 1) {
+		_winner = 1;
+		_score[1]++;
+		return true;
+	}
+	if (_playerI[2] == 17) {
+		_winner = 2;
+		_score[2]++;
+		return true;
+	}
+	if (_playerI[3] == 1) {
+		_winner = 3;
+		_score[3]++;
+		return true;
+	}
+}
+
+int GameInstance::GetWinner()
+{
+	return _winner;
 }

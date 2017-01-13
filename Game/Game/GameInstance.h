@@ -6,6 +6,7 @@ public:
 private:
 	int _WALL = 99;
 
+	int _winner;
 	int _players;
 	int _currentPlayerTurn;
 	int _playerI[4];
@@ -20,5 +21,8 @@ public:
 	bool MoveInternal(int i, int j);
 	bool AddWall(int i, int j);
 	void NextPlayer();
+	int GetWinner();
+	bool Win();
+	void NewGame();
 };
 
