@@ -76,14 +76,21 @@ void Game::GamePage::Init() {
 	player2Score->Text = "" + gameInstance->GetPlayerScore(1);
 	player3Score->Text = "" + gameInstance->GetPlayerScore(2);
 	player4Score->Text = "" + gameInstance->GetPlayerScore(3);
+	
+	player1Walls->Text = "walls:" + gameInstance->GetWalls(0);
+	player2Walls->Text = "walls:" + gameInstance->GetWalls(1);
+	player3Walls->Text = "walls:" + gameInstance->GetWalls(2);
+	player4Walls->Text = "walls:" + gameInstance->GetWalls(3);
 
 	if (gameInstance->Players() > 2) {
 		player3->Visibility = Windows::UI::Xaml::Visibility::Visible;
 		player3Score->Visibility = Windows::UI::Xaml::Visibility::Visible;
+		player3Walls->Visibility = Windows::UI::Xaml::Visibility::Visible;
 	}
 	if (gameInstance->Players() > 3) {
 		player4->Visibility = Windows::UI::Xaml::Visibility::Visible;
 		player4Score->Visibility = Windows::UI::Xaml::Visibility::Visible;
+		player4Walls->Visibility = Windows::UI::Xaml::Visibility::Visible;
 	}
 
 	for (int i = 0; i <= 18; i += 2) {
@@ -159,12 +166,16 @@ void Game::GamePage::Init() {
 
 	player1->Foreground = blue;
 	player1Score->Foreground = blue;
+	player1Walls->Foreground = blue;
 	player2->Foreground = red;
 	player2Score->Foreground = red;
+	player2Walls->Foreground = red;
 	player3->Foreground = green;
 	player3Score->Foreground = green;
+	player3Walls->Foreground = green;
 	player4->Foreground = yellow;
 	player4Score->Foreground = yellow;
+	player4Walls->Foreground = yellow;
 
 	ChangePlayer(-1);
 }
@@ -190,6 +201,11 @@ void Game::GamePage::ChangePlayer(int oldPlayer) {
 		player3->FontSize = 20;
 	if (gameInstance->GetCurrentPlayer() == 3)
 		player4->FontSize = 20;
+
+	player1Walls->Text = "walls:" + gameInstance->GetWalls(0);
+	player2Walls->Text = "walls:" + gameInstance->GetWalls(1);
+	player3Walls->Text = "walls:" + gameInstance->GetWalls(2);
+	player4Walls->Text = "walls:" + gameInstance->GetWalls(3);
 }
 
 void Game::GamePage::MovePlayer(Grid ^grid, int oldPlayer) {

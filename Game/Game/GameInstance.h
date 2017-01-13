@@ -23,6 +23,7 @@ public:
 	bool AddWallInternal(int i, int j, int i2, int j2);
 	void NextPlayer();
 	int GetWinner();
+	int GetWalls(int player);
 	bool Win();
 	void NewGame();
 	int Players();

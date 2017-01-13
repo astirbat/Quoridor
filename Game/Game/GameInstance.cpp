@@ -177,6 +177,10 @@ bool GameInstance::AddWallInternal(int i, int j, int i2, int j2)
 	return false;
 }
 
+int GameInstance::GetWalls(int player) {
+	return _walls[player];
+}
+
 void GameInstance::NextPlayer()
 {
 	Win();

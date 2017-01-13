@@ -51,45 +51,65 @@ void ::Game::GamePage::Connect(int __connectionId, ::Platform::Object^ __target)
             break;
         case 5:
             {
-                this->player2 = safe_cast<::Windows::UI::Xaml::Controls::TextBlock^>(__target);
+                this->player1Walls = safe_cast<::Windows::UI::Xaml::Controls::TextBlock^>(__target);
             }
             break;
         case 6:
             {
-                this->player2Score = safe_cast<::Windows::UI::Xaml::Controls::TextBlock^>(__target);
+                this->player2 = safe_cast<::Windows::UI::Xaml::Controls::TextBlock^>(__target);
             }
             break;
         case 7:
             {
-                this->player3 = safe_cast<::Windows::UI::Xaml::Controls::TextBlock^>(__target);
+                this->player2Score = safe_cast<::Windows::UI::Xaml::Controls::TextBlock^>(__target);
             }
             break;
         case 8:
             {
-                this->player3Score = safe_cast<::Windows::UI::Xaml::Controls::TextBlock^>(__target);
+                this->player2Walls = safe_cast<::Windows::UI::Xaml::Controls::TextBlock^>(__target);
             }
             break;
         case 9:
             {
-                this->player4 = safe_cast<::Windows::UI::Xaml::Controls::TextBlock^>(__target);
+                this->player3 = safe_cast<::Windows::UI::Xaml::Controls::TextBlock^>(__target);
             }
             break;
         case 10:
             {
-                this->player4Score = safe_cast<::Windows::UI::Xaml::Controls::TextBlock^>(__target);
+                this->player3Score = safe_cast<::Windows::UI::Xaml::Controls::TextBlock^>(__target);
             }
             break;
         case 11:
             {
-                ::Windows::UI::Xaml::Controls::Button^ element11 = safe_cast<::Windows::UI::Xaml::Controls::Button^>(__target);
-                (safe_cast<::Windows::UI::Xaml::Controls::Button^>(element11))->Click += ref new ::Windows::UI::Xaml::RoutedEventHandler(this, (void (::Game::GamePage::*)
-                    (::Platform::Object^, ::Windows::UI::Xaml::RoutedEventArgs^))&GamePage::Button_Click);
+                this->player3Walls = safe_cast<::Windows::UI::Xaml::Controls::TextBlock^>(__target);
             }
             break;
         case 12:
             {
-                ::Windows::UI::Xaml::Controls::Button^ element12 = safe_cast<::Windows::UI::Xaml::Controls::Button^>(__target);
-                (safe_cast<::Windows::UI::Xaml::Controls::Button^>(element12))->Click += ref new ::Windows::UI::Xaml::RoutedEventHandler(this, (void (::Game::GamePage::*)
+                this->player4 = safe_cast<::Windows::UI::Xaml::Controls::TextBlock^>(__target);
+            }
+            break;
+        case 13:
+            {
+                this->player4Score = safe_cast<::Windows::UI::Xaml::Controls::TextBlock^>(__target);
+            }
+            break;
+        case 14:
+            {
+                this->player4Walls = safe_cast<::Windows::UI::Xaml::Controls::TextBlock^>(__target);
+            }
+            break;
+        case 15:
+            {
+                ::Windows::UI::Xaml::Controls::Button^ element15 = safe_cast<::Windows::UI::Xaml::Controls::Button^>(__target);
+                (safe_cast<::Windows::UI::Xaml::Controls::Button^>(element15))->Click += ref new ::Windows::UI::Xaml::RoutedEventHandler(this, (void (::Game::GamePage::*)
+                    (::Platform::Object^, ::Windows::UI::Xaml::RoutedEventArgs^))&GamePage::Button_Click);
+            }
+            break;
+        case 16:
+            {
+                ::Windows::UI::Xaml::Controls::Button^ element16 = safe_cast<::Windows::UI::Xaml::Controls::Button^>(__target);
+                (safe_cast<::Windows::UI::Xaml::Controls::Button^>(element16))->Click += ref new ::Windows::UI::Xaml::RoutedEventHandler(this, (void (::Game::GamePage::*)
                     (::Platform::Object^, ::Windows::UI::Xaml::RoutedEventArgs^))&GamePage::Button_Click_1);
             }
             break;
