@@ -7,8 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid  Loaded="Grid_Loaded" >
-        <Grid x:Name="board" Margin="50">
+    <Grid x:ConnectionId='1'                       >
+        <Grid x:ConnectionId='2' x:Name="board" Margin="50">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="10"/>
                 <ColumnDefinition Width="*"/>
@@ -55,3 +55,4 @@
         </Grid>
     </Grid>
 </Page>
+

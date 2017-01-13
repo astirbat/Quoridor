@@ -28,23 +28,37 @@ GamePage::GamePage()
 	InitializeComponent();
 }
 
+SolidColorBrush^ gray ;
+SolidColorBrush^ white ;
+SolidColorBrush^ black ;
+SolidColorBrush^ blue;
+SolidColorBrush^ red;
 
 void Game::GamePage::Grid_Loaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
-	Color gray = ColorHelper::FromArgb(255, 144, 144, 144);
+	 gray = ref new SolidColorBrush(ColorHelper::FromArgb(255, 144, 144, 144));
+	 white = ref new SolidColorBrush(ColorHelper::FromArgb(255, 255, 255, 255));
+	 black = ref new SolidColorBrush(ColorHelper::FromArgb(255, 0, 0, 0));
+	 blue = ref new SolidColorBrush(ColorHelper::FromArgb(255, 0, 0, 255));
+	 red = ref new SolidColorBrush(ColorHelper::FromArgb(255, 255, 0, 0));
 
-	for (int i = 0; i <= 18; i+=2) {
+
+	 Init();
+}
+
+void Game::GamePage::Init() {
+	for (int i = 0; i <= 18; i += 2) {
 		for (int j = 0; j <= 18; j++) {
 
 			Grid^ grid = ref new Grid();
-			grid->Background = ref new SolidColorBrush(gray);
-			
-			IJtag^ tagij = ref new IJtag(i,j);
+			grid->Background = gray;
+
+			IJtag^ tagij = ref new IJtag(i, j);
 
 			grid->Tag = tagij;
 			grid->Tapped += ref new Windows::UI::Xaml::Input::TappedEventHandler(this, &Game::GamePage::OnTapped);
 
-			board->Children->Append(grid);			
+			board->Children->Append(grid);
 			board->SetRow(grid, i);
 			board->SetColumn(grid, j);
 		}
@@ -53,9 +67,9 @@ void Game::GamePage::Grid_Loaded(Platform::Object^ sender, Windows::UI::Xaml::Ro
 		for (int j = 0; j <= 18; j += 2) {
 
 			Grid^ grid = ref new Grid();
-			grid->Background = ref new SolidColorBrush(gray);
+			grid->Background = gray;
 
-			IJtag^ tagij = ref new IJtag(i,j);
+			IJtag^ tagij = ref new IJtag(i, j);
 
 			grid->Tag = tagij;
 			grid->Tapped += ref new Windows::UI::Xaml::Input::TappedEventHandler(this, &Game::GamePage::OnTapped);
@@ -68,33 +82,45 @@ void Game::GamePage::Grid_Loaded(Platform::Object^ sender, Windows::UI::Xaml::Ro
 		for (int j = 1; j <= 18; j += 2) {
 
 			Grid^ grid = ref new Grid();
-			IJtag^ tagij = ref new IJtag(i,j);
+			grid->Background = white;
+
+			IJtag^ tagij = ref new IJtag(i, j);
 
 			grid->Tag = tagij;
-			grid->Tapped += ref new Windows::UI::Xaml::Input::TappedEventHandler(this, &Game::GamePage::OnTapped2);
+			grid->Tapped += ref new Windows::UI::Xaml::Input::TappedEventHandler(this, &Game::GamePage::OnTapped);
 			board->Children->Append(grid);
 			board->SetRow(grid, i);
 			board->SetColumn(grid, j);
+
+			if(i==1 && j==5)
+				grid->Background = blue;
+			if (i == 9 && j == 5)
+				grid->Background = red;
 		}
 	}
 }
 
-void ClickBorder(int i, int j) {
-
+void ClickBorder(Grid ^grid,int i, int j) {
+	grid->Background = black;
 }
-void ClickContent(int i, int j) {
 
+void ClickContent(Grid ^grid,int i, int j) {
+	int trueI = (i - 1) / 2;
+	int trueJ = (j - 1) / 2;
+
+	grid->Background = red;
 }
 
 void Game::GamePage::OnTapped(Platform::Object ^sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs ^e)
 {
 	Grid^ grid = (Grid^)sender;
 	IJtag^ tagij = (IJtag^)(grid->Tag);
-	ClickBorder(tagij->GetI(), tagij->GetJ());
+	int i = tagij->GetI();
+	int j = tagij->GetJ();
+	
+	if (i % 2 == 1 && j % 2 == 1)
+		ClickContent(grid,i, j);
+	else
+		ClickBorder(grid,i, j);
 }
-void Game::GamePage::OnTapped2(Platform::Object ^sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs ^e)
-{
-	Grid^ grid = (Grid^)sender;
-	IJtag^ tagij = (IJtag^)(grid->Tag);
-	ClickContent(tagij->GetI(), tagij->GetJ());
-}
+
