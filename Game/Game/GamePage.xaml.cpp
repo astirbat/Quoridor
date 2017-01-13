@@ -34,6 +34,8 @@ SolidColorBrush^ white ;
 SolidColorBrush^ black ;
 SolidColorBrush^ blue;
 SolidColorBrush^ red;
+SolidColorBrush^ green;
+SolidColorBrush^ yellow;
 GameInstance^ gameInstance;
 
 void Game::GamePage::Grid_Loaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
@@ -43,8 +45,10 @@ void Game::GamePage::Grid_Loaded(Platform::Object^ sender, Windows::UI::Xaml::Ro
 	 black = ref new SolidColorBrush(ColorHelper::FromArgb(255, 0, 0, 0));
 	 blue = ref new SolidColorBrush(ColorHelper::FromArgb(255, 0, 0, 255));
 	 red = ref new SolidColorBrush(ColorHelper::FromArgb(255, 255, 0, 0));
+	 green = ref new SolidColorBrush(ColorHelper::FromArgb(255, 0, 255, 0));
+	 yellow = ref new SolidColorBrush(ColorHelper::FromArgb(255, 255, 255, 0));
 
-	 gameInstance = ref new GameInstance(2);
+	 gameInstance = ref new GameInstance(4);
 	 Init();
 }
 
@@ -53,6 +57,17 @@ void Game::GamePage::Init() {
 
 	player1Score->Text = "" + gameInstance->GetPlayerScore(0);
 	player2Score->Text = "" + gameInstance->GetPlayerScore(1);
+	player3Score->Text = "" + gameInstance->GetPlayerScore(2);
+	player4Score->Text = "" + gameInstance->GetPlayerScore(3);
+
+	if (gameInstance->Players() > 2) {
+		player3->Visibility = Windows::UI::Xaml::Visibility::Visible;
+		player3Score->Visibility = Windows::UI::Xaml::Visibility::Visible;
+	}
+	if (gameInstance->Players() > 3) {
+		player4->Visibility = Windows::UI::Xaml::Visibility::Visible;
+		player4Score->Visibility = Windows::UI::Xaml::Visibility::Visible;
+	}
 
 	for (int i = 0; i <= 18; i += 2) {
 		for (int j = 0; j <= 18; j++) {
@@ -109,6 +124,19 @@ void Game::GamePage::Init() {
 				player2Grid = grid;
 				grid->Background = red;
 			}
+
+			if (gameInstance->Players() > 2) {
+				if (trueI == 0 && trueJ == 4) {
+					player3Grid = grid;
+					grid->Background = green;
+				}
+			}
+			if (gameInstance->Players() > 3) {
+				if (trueI == 8 && trueJ == 4) {
+					player4Grid = grid;
+					grid->Background = yellow;
+				}
+			}
 		}
 	}
 
@@ -116,6 +144,10 @@ void Game::GamePage::Init() {
 	player1Score->Foreground = blue;
 	player2->Foreground = red;
 	player2Score->Foreground = red;
+	player3->Foreground = green;
+	player3Score->Foreground = green;
+	player4->Foreground = yellow;
+	player4Score->Foreground = yellow;
 
 	ChangePlayer(-1);
 }
@@ -125,10 +157,19 @@ void Game::GamePage::ChangePlayer(int oldPlayer) {
 		player1->FontSize = 16;
 	if (oldPlayer == 1)
 		player2->FontSize = 16;
+	if (oldPlayer == 2)
+		player3->FontSize = 16;
+	if (oldPlayer == 3)
+		player4->FontSize = 16;
+
 	if (gameInstance->GetCurrentPlayer() == 0)
 		player1->FontSize = 20;
 	if (gameInstance->GetCurrentPlayer() == 1)
 		player2->FontSize = 20;
+	if (gameInstance->GetCurrentPlayer() == 2)
+		player3->FontSize = 20;
+	if (gameInstance->GetCurrentPlayer() == 3)
+		player4->FontSize = 20;
 }
 
 void Game::GamePage::MovePlayer(Grid ^grid, int oldPlayer) {
@@ -136,6 +177,10 @@ void Game::GamePage::MovePlayer(Grid ^grid, int oldPlayer) {
 		player1Grid->Background = white;
 	if(oldPlayer==1)
 		player2Grid->Background = white;
+	if (oldPlayer == 2)
+		player3Grid->Background = white;
+	if (oldPlayer == 3)
+		player4Grid->Background = white;
 
 	if (oldPlayer == 0) {
 		grid->Background = blue;
@@ -144,6 +189,14 @@ void Game::GamePage::MovePlayer(Grid ^grid, int oldPlayer) {
 	if (oldPlayer == 1) {
 		grid->Background = red;
 		player2Grid = grid;
+	}
+	if (oldPlayer == 2) {
+		grid->Background = green;
+		player3Grid = grid;
+	}
+	if (oldPlayer == 3) {
+		grid->Background = yellow;
+		player4Grid = grid;
 	}
 }
 
@@ -186,4 +239,10 @@ void Game::GamePage::OnTapped(Platform::Object ^sender, Windows::UI::Xaml::Input
 void Game::GamePage::Button_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
 	Init();
+}
+
+
+void Game::GamePage::Button_Click_1(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	Frame->GoBack();
 }

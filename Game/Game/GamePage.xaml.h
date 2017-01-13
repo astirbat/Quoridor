@@ -31,5 +31,6 @@ namespace Game
 		void ClickBorder(Grid ^grid, int i, int j);
 		void ClickContent(Grid ^grid, int i, int j);
 		void Button_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+		void Button_Click_1(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 	};
 }

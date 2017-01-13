@@ -38,6 +38,10 @@ namespace Game
         private: ::Windows::UI::Xaml::Controls::TextBlock^ player1Score;
         private: ::Windows::UI::Xaml::Controls::TextBlock^ player2;
         private: ::Windows::UI::Xaml::Controls::TextBlock^ player2Score;
+        private: ::Windows::UI::Xaml::Controls::TextBlock^ player3;
+        private: ::Windows::UI::Xaml::Controls::TextBlock^ player3Score;
+        private: ::Windows::UI::Xaml::Controls::TextBlock^ player4;
+        private: ::Windows::UI::Xaml::Controls::TextBlock^ player4Score;
     };
 }
 

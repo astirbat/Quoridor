@@ -46,7 +46,6 @@ void GameInstance::NewGame()
 	_winner = -1;
 }
 
-
 int GameInstance::GetPlayerScore(int player)
 {
 	if (player >= _players)
@@ -54,12 +53,10 @@ int GameInstance::GetPlayerScore(int player)
 	return _score[player];
 }
 
-
 int GameInstance::GetCurrentPlayer()
 {
 	return _currentPlayerTurn;
 }
-
 
 bool GameInstance::Move(int i, int j)
 {
@@ -83,6 +80,9 @@ bool GameInstance::MoveInternal(int i, int j)
 	if (i % 2 != 1 || j % 2 != 1)
 		return false;
 
+	if (_board[i][j] != 0)
+		return false;
+
 	if (_playerI[_currentPlayerTurn] == i) {
 		if ((_playerJ[_currentPlayerTurn] + 2 == j) && (_board[i][j - 1] != _WALL))
 			return true;
@@ -96,9 +96,45 @@ bool GameInstance::MoveInternal(int i, int j)
 			return true;
 	}
 
+	if (_playerI[_currentPlayerTurn] == i) {
+		if ((_playerJ[_currentPlayerTurn] + 4 == j) && (_board[i][j - 2] != 0) && (_board[i][j - 1] != _WALL) && (_board[i][j - 3] != _WALL))
+			return true;
+		if ((_playerJ[_currentPlayerTurn] - 4 == j) && (_board[i][j + 2] != 0) && (_board[i][j + 1] != _WALL) && (_board[i][j + 3] != _WALL))
+			return true;
+	}
+	if (_playerJ[_currentPlayerTurn] == j) {
+		if ((_playerI[_currentPlayerTurn] + 4 == i) && (_board[i - 2][j] != 0) && (_board[i - 1][j] != _WALL) && (_board[i - 3][j] != _WALL))
+			return true;
+		if ((_playerI[_currentPlayerTurn] - 4 == i) && (_board[i + 2][j] != 0) && (_board[i + 1][j] != _WALL) && (_board[i + 3][j] != _WALL))
+			return true;
+	}
 
-	if (_board[i][j] != 0)
-		return false;
+	if ((_playerI[_currentPlayerTurn] + 2 == i) && (_board[i - 1][_playerJ[_currentPlayerTurn]] == _WALL)) {
+		if ((_playerJ[_currentPlayerTurn] + 2 == j) && (_board[i - 1][j - 1] != _WALL))
+			return true;
+		if ((_playerJ[_currentPlayerTurn] - 2 == j) && (_board[i - 1][j + 1] != _WALL))
+			return true;
+	}
+	if ((_playerI[_currentPlayerTurn] - 2 == i) && (_board[i + 1][_playerJ[_currentPlayerTurn]] == _WALL)) {
+		if ((_playerJ[_currentPlayerTurn] + 2 == j) && (_board[i + 1][j - 1] != _WALL))
+			return true;
+		if ((_playerJ[_currentPlayerTurn] - 2 == j) && (_board[i + 1][j + 1] != _WALL))
+			return true;
+	}
+
+	if ((_playerJ[_currentPlayerTurn] + 2 == j) && (_board[_playerI[_currentPlayerTurn]][j - 1] == _WALL)) {
+		if ((_playerI[_currentPlayerTurn] + 2 == i) && (_board[i - 1][j - 1] != _WALL))
+			return true;
+		if ((_playerI[_currentPlayerTurn] - 2 == i) && (_board[i + 1][j - 1] != _WALL))
+			return true;
+	}
+	if ((_playerJ[_currentPlayerTurn] - 2 == j) && (_board[_playerI[_currentPlayerTurn]][j + 1] == _WALL)) {
+		if ((_playerI[_currentPlayerTurn] + 2 == i) && (_board[i - 1][j + 1] != _WALL))
+			return true;
+		if ((_playerI[_currentPlayerTurn] - 2 == i) && (_board[i + 1][j + 1] != _WALL))
+			return true;
+	}
+
 	return false;
 }
 
@@ -130,6 +166,8 @@ void GameInstance::NextPlayer()
 
 bool GameInstance::Win()
 {
+	if (_winner != -1)
+		return true;
 	if (_playerJ[0] == 17) {
 		_winner = 0;
 		_score[0]++;
@@ -150,9 +188,15 @@ bool GameInstance::Win()
 		_score[3]++;
 		return true;
 	}
+	return false;
 }
 
 int GameInstance::GetWinner()
 {
 	return _winner;
+}
+
+int GameInstance::Players()
+{
+	return _players;
 }

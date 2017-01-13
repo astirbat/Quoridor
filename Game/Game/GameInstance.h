@@ -24,5 +24,6 @@ public:
 	int GetWinner();
 	bool Win();
 	void NewGame();
+	int Players();
 };
 

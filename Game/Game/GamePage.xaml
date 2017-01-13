@@ -31,7 +31,15 @@
             <TextBlock Grid.Column="7" x:Name="player2" Text="player2" FontSize="16"/>
             <TextBlock Grid.Column="7" Grid.Row="1" x:Name="player2Score" Text="0" TextAlignment="Center"/>
 
+            <TextBlock Grid.Column="3" x:Name="player3" Text="player3" FontSize="16" Visibility="Collapsed"/>
+            <TextBlock Grid.Column="3" Grid.Row="1" x:Name="player3Score"  Text="0" TextAlignment="Center" Visibility="Collapsed"/>
+
+            <TextBlock Grid.Column="5" x:Name="player4" Text="player4" FontSize="16" Visibility="Collapsed"/>
+            <TextBlock Grid.Column="5" Grid.Row="1" x:Name="player4Score" Text="0" TextAlignment="Center" Visibility="Collapsed"/>
+
             <Button Grid.Column="4" Grid.RowSpan="2" Content="New Game" HorizontalAlignment="Center" Click="Button_Click" />
+            
+            <Button Grid.RowSpan="2" Content="Back" HorizontalAlignment="Left" Margin="5" Click="Button_Click_1" />
         </Grid>
         
         <Grid x:Name="board" Margin="50">
