@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "GameInstance.h"
 
-
 GameInstance::GameInstance(int players)
 {
 	_players = players;

@@ -30,5 +30,15 @@ MainPage::MainPage()
 
 void Game::MainPage::Button_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
-	this->Frame->Navigate(Windows::UI::Xaml::Interop::TypeName(GamePage::typeid));
+	this->Frame->Navigate(Windows::UI::Xaml::Interop::TypeName(GamePage::typeid),2);
+}
+
+void Game::MainPage::Button_Click_1(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	this->Frame->Navigate(Windows::UI::Xaml::Interop::TypeName(GamePage::typeid),3);
+}
+
+void Game::MainPage::Button_Click_2(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	this->Frame->Navigate(Windows::UI::Xaml::Interop::TypeName(GamePage::typeid),4);
 }

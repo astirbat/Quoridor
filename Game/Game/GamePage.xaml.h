@@ -7,6 +7,7 @@
 
 #include "GamePage.g.h"
 using namespace Windows::UI::Xaml::Controls;
+using namespace Windows::UI::Xaml::Navigation;
 
 namespace Game
 {
@@ -18,7 +19,9 @@ namespace Game
 	{
 	public:
 		GamePage();
+		void OnNavigatedTo(NavigationEventArgs ^ e) override;
 	private:
+		int nrOfPlayers;
 		Grid ^player1Grid;
 		Grid ^player2Grid;
 		Grid ^player3Grid;

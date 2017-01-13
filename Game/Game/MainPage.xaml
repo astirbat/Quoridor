@@ -9,7 +9,10 @@
 
     <Grid >
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Content="Start Game" Click="Button_Click"  />
+            <TextBlock Text="Start new game:"/>
+            <Button Content="2 players" Click="Button_Click" HorizontalAlignment="Center"  Margin="10" />
+            <Button Content="3 players" Click="Button_Click_1" HorizontalAlignment="Center"  Margin="10"  />
+            <Button Content="4 players" Click="Button_Click_2" HorizontalAlignment="Center"  Margin="10"  />
         </StackPanel>
     </Grid>
 </Page>

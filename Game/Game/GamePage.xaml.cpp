@@ -24,6 +24,7 @@ using namespace Windows::UI;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
+
 GamePage::GamePage()
 {
 	InitializeComponent();
@@ -38,6 +39,17 @@ SolidColorBrush^ green;
 SolidColorBrush^ yellow;
 GameInstance^ gameInstance;
 
+void Game::GamePage::OnNavigatedTo(NavigationEventArgs^ e)
+{
+	nrOfPlayers = (int)e->Parameter;
+	if (nrOfPlayers < 2)
+		nrOfPlayers = 2;
+	if (nrOfPlayers > 4)
+		nrOfPlayers = 4;
+
+	::Windows::UI::Xaml::Controls::Page::OnNavigatedTo(e);
+}
+
 void Game::GamePage::Grid_Loaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
 	 gray = ref new SolidColorBrush(ColorHelper::FromArgb(255, 144, 144, 144));
@@ -47,8 +59,8 @@ void Game::GamePage::Grid_Loaded(Platform::Object^ sender, Windows::UI::Xaml::Ro
 	 red = ref new SolidColorBrush(ColorHelper::FromArgb(255, 255, 0, 0));
 	 green = ref new SolidColorBrush(ColorHelper::FromArgb(255, 0, 255, 0));
 	 yellow = ref new SolidColorBrush(ColorHelper::FromArgb(255, 255, 255, 0));
-
-	 gameInstance = ref new GameInstance(4);
+	
+	 gameInstance = ref new GameInstance(nrOfPlayers);
 	 Init();
 }
 
